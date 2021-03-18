@@ -3,24 +3,24 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 // 1. Get computer name
-console.log('computer-name: ' + os.hostname());
+console.log('ComputerName: ' + os.hostname());
 
 // 2. Get model name
 Exe('sysctl -n hw.model', modelName => {
-    console.log('model-name: ' + modelName);
+    console.log('ModelName: ' + modelName);
 })
 
 // 3. Get CPU info
 Exe('sysctl -n machdep.cpu.brand_string', cpu => {
-    console.log('cpu: ' + cpu);
+    console.log('CPU brand: ' + cpu);
 })
 
 // 4. User name
-console.log('userName: ' + os.userInfo().username);
+console.log('Username: ' + os.userInfo().username);
 
 // 5. Thread count
 Exe('sysctl -n machdep.cpu.thread_count', numthreads => {
-    console.log('total-thread: ' + numthreads);
+    console.log('Total-thread: ' + numthreads);
 })
 
 // 6. Li caches per core
@@ -33,14 +33,11 @@ Exe('sysctl -n hw.l2cachesize', mem => {
 
 // 7. Memory
 Exe('sysctl -n hw.memsize', mem => {
-    console.log('memory: ' + mem + 'bytes');
+    console.log('Memory: ' + mem + 'bytes');
 })
 
 // 8. Camera
 Exe('system_profiler SPCameraDataType', rows => {
-    // const c = r.replace(/(^[ \t]*\n)/gm, "");
-    // const rows = c.split("\n");
-    
     const camera = {
         'item': 'Camera',
         'name': rows[1].trim().slice(0, -1),
@@ -52,9 +49,6 @@ Exe('system_profiler SPCameraDataType', rows => {
 
 // 9. Apple pay
 Exe('system_profiler SPSecureElementDataType', rows => {
-    // const c = r.replace(/(^[ \t]*\n)/gm, "");
-    // const rows = c.split("\n");
-
     const applePay = {
         'item': 'ApplePay',
         'platformID': rows[2].split(":")[1].trim(),
@@ -65,11 +59,8 @@ Exe('system_profiler SPSecureElementDataType', rows => {
 
 // 10. Bluetooth
 Exe('system_profiler SPBluetoothDataType', rows => {
-    // const c = r.replace(/(^[ \t]*\n)/gm, "");
-    // const rows = c.split("\n");
-
     const bluetooth = {
-        'item': 'bluetooth',
+        'item': 'Bluetooth',
         'version': rows[1].split(":")[1].trim(),
         'adress': rows[3].split(":")[1].trim()
     };
@@ -78,9 +69,6 @@ Exe('system_profiler SPBluetoothDataType', rows => {
 
 // 11. Ethernet
 Exe('system_profiler SPEthernetDataType', rows => {
-    // const c = r.replace(/(^[ \t]*\n)/gm, "");
-    // const rows = c.split("\n");
-
     const ethernet = {
         'item': 'Ethenet',
         'version': rows[6].split(":")[1].trim(),
@@ -91,11 +79,8 @@ Exe('system_profiler SPEthernetDataType', rows => {
 
 // 12. Graphics
 Exe('system_profiler SPDisplaysDataType', rows => {
-    // const c = r.replace(/(^[ \t]*\n)/gm, "");
-    // const rows = c.split("\n");
-
     const graphics = {
-        'item': 'graphics',
+        'item': 'Graphics',
         'chipsetModel': rows[2].split(":")[1].trim(),
         'type': rows[3].split(": ")[1].trim(),
         'deviceID': rows[7].split(": ")[1].trim()
@@ -105,11 +90,8 @@ Exe('system_profiler SPDisplaysDataType', rows => {
 
 // 13. Hardware
 Exe('system_profiler SPHardwareDataType', rows => {
-    // const c = r.replace(/(^[ \t]*\n)/gm, "");
-    // const rows = c.split("\n");
-
     const hardware = {
-        'item': 'hardware',
+        'item': 'Hardware',
         'modelName': rows[2].split(":")[1].trim(),
         'modelIdentifier': rows[3].split(": ")[1].trim(),
         'processerName': rows[4].split(": ")[1].trim(),
@@ -127,11 +109,8 @@ Exe('system_profiler SPHardwareDataType', rows => {
 
 // 14. Wifi
 Exe('system_profiler SPNetworkLocationDataType', rows => {
-    // const c = r.replace(/(^[ \t]*\n)/gm, "");
-    // const rows = c.split("\n");
-
     const wifi = {
-        'item': 'wifi',
+        'item': 'Wifi',
         'type': rows[5].split(":")[1].trim(),
         'macAdress': rows[7].split(": ")[1].trim(),
     };
@@ -141,12 +120,24 @@ Exe('system_profiler SPNetworkLocationDataType', rows => {
 // 15. Power
 Exe('system_profiler SPPowerDataType', rows => {
     const power = {
-        'item': 'power',
+        'item': 'Power',
         'serialNumber': rows[3].split(":")[1].trim(),
         'manufactuter': rows[4].split(": ")[1].trim(),
         'deviceName': rows[5].split(": ")[1].trim()
     };
     console.log(power);
+})
+
+// 16. Disk
+Exe('system_profiler SPNVMeDataType', rows => {
+    const hardware = {
+        'item': 'Disk',
+        'capacity': rows[3].split(": ")[1].trim(),
+        'model': rows[5].split(":")[1].trim(),
+        'serialNumber': rows[7].split(": ")[1].trim(),
+        'volumeUUID': rows[21].split(": ")[1].trim()
+    };
+    console.log(hardware);
 })
 
 // Excute cmd
