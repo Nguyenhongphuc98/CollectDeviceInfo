@@ -2,8 +2,8 @@ var os = require('os');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
-// 1. Get computer name
-console.log('ComputerName: ' + os.hostname());
+// 1. Get host name
+console.log('HostName: ' + os.hostname());
 
 // 2. Get model name
 Exe('sysctl -n hw.model', modelName => {
@@ -142,26 +142,22 @@ Exe('system_profiler SPNVMeDataType', rows => {
 })
 
 // 17. Ram
-Exe('system_profiler SPMemoryDataType', r => {
-    const c = r.replace(/(^[ \t]*\n)/gm, "");
-    const rows = c.split("\n");
+Exe('system_profiler SPMemoryDataType', rows => {
 
     const ram = {
         'item': 'Ram',
-        'size': rows[5].split(": ")[1].trim(),
-        'type': rows[6].split(":")[1].trim(),
-        'speed': rows[7].split(": ")[1].trim(),
-        'manufactuter': rows[9].split(": ")[1].trim(),
-        'partNumber': rows[10].split(": ")[1].trim(),
-        'serialNumber': rows[11].split(": ")[1].trim()
+        'size': rows[5].split(": ")[1].trim() + " * " + rows[13].split(": ")[1].trim(),
+        'type': rows[6].split(":")[1].trim() + " * " + rows[14].split(": ")[1].trim(),
+        'speed': rows[7].split(": ")[1].trim() + " * " + rows[15].split(": ")[1].trim(),
+        'manufactuter': rows[9].split(": ")[1].trim() + " * " + rows[17].split(": ")[1].trim(),
+        'partNumber': rows[10].split(": ")[1].trim() + " * " + rows[18].split(": ")[1].trim(),
+        'serialNumber': rows[11].split(": ")[1].trim() + " * " + rows[19].split(": ")[1].trim()
     };
     console.log(ram);
 })
 
 // 18. Software overview
-Exe('system_profiler SPSoftwareDataType', r => {
-    const c = r.replace(/(^[ \t]*\n)/gm, "");
-    const rows = c.split("\n");
+Exe('system_profiler SPSoftwareDataType', rows => {
 
     const software = {
         'item': 'Software',
