@@ -101,6 +101,7 @@ Exe('system_profiler SPHardwareDataType', rows => {
         'l1Cache': rows[8].split(": ")[1].trim(),
         'l2Cache': rows[9].split(": ")[1].trim(),
         'memory': rows[11].split(": ")[1].trim(),
+        'bootRomVersion': rows[12].split(": ")[1].trim(),
         'serialNumber': rows[13].split(": ")[1].trim(),
         'hardWareUUID': rows[14].split(": ")[1].trim()
     };
@@ -138,6 +139,40 @@ Exe('system_profiler SPNVMeDataType', rows => {
         'volumeUUID': rows[21].split(": ")[1].trim()
     };
     console.log(hardware);
+})
+
+// 17. Ram
+Exe('system_profiler SPMemoryDataType', r => {
+    const c = r.replace(/(^[ \t]*\n)/gm, "");
+    const rows = c.split("\n");
+
+    const ram = {
+        'item': 'Ram',
+        'size': rows[5].split(": ")[1].trim(),
+        'type': rows[6].split(":")[1].trim(),
+        'speed': rows[7].split(": ")[1].trim(),
+        'manufactuter': rows[9].split(": ")[1].trim(),
+        'partNumber': rows[10].split(": ")[1].trim(),
+        'serialNumber': rows[11].split(": ")[1].trim()
+    };
+    console.log(ram);
+})
+
+// 18. Software overview
+Exe('system_profiler SPSoftwareDataType', r => {
+    const c = r.replace(/(^[ \t]*\n)/gm, "");
+    const rows = c.split("\n");
+
+    const software = {
+        'item': 'Software',
+        'systemVersion': rows[2].split(": ")[1].trim(),
+        'kernelVersion': rows[3].split(":")[1].trim(),
+        'bootVolume': rows[4].split(": ")[1].trim(),
+        'computerName': rows[6].split(": ")[1].trim(),
+        'userName': rows[7].split(": ")[1].trim(),
+        'timeSinceBoot': rows[10].split(": ")[1].trim()
+    };
+    console.log(software);
 })
 
 // Excute cmd
