@@ -39,21 +39,21 @@ function getValue(lines, property, separator, trimmed) {
     property = property.toLowerCase();
     trimmed = trimmed || false;
     for (let i = 0; i < lines.length; i++) {
-      let line = lines[i].toLowerCase().replace(/\t/g, '');
-      if (trimmed) {
-        line = line.trim();
-      }
-      if (line.startsWith(property)) {
-        const parts = trimmed ? lines[i].trim().split(separator) : lines[i].split(separator);
-        if (parts.length >= 2) {
-          parts.shift();
-          return parts.join(separator).trim();
-        } else {
-          return '';
+        let line = lines[i].toLowerCase().replace(/[\t\r]/g, '');
+        if (trimmed) {
+            line = line.trim();
         }
-      }
+        if (line.startsWith(property)) {
+            const parts = trimmed ? lines[i].trim().split(separator) : lines[i].split(separator);
+            if (parts.length >= 2) {
+                parts.shift();
+                return parts.join(separator).trim();
+            } else {
+                return '';
+            }
+        }
     }
     return '';
-  }
+}
 
-module.exports = {sysctl, profiler, wmic, getValue};
+module.exports = { sysctl, profiler, wmic, getValue };
