@@ -3,7 +3,7 @@
 console.log(process.env['COMPUTERNAME']);
 
 // 1. CPU ===========================================
-//wmic.exe cpu get /value'
+wmic.exe cpu get /value
 // Caption=Intel64 Family 6 Model 63 Stepping 2 => count processer = num line start with Caption
 
 //Description=Intel64 Family 6 Model 63 Stepping 2
@@ -41,7 +41,7 @@ wmic.exe path Win32_PNPEntity get /value // :((
 // 3. BIOS ===========================================
 wmic.exe bios get Version, SerialNumber, SMBIOSBIOSVersion
 //SerialNumber                          SMBIOSBIOSVersion  Version
-//ec2eb73a-13df-299f-812e-2b7337673a8c  4.2.amazon         Xen - 0
+//ec2eb73a-13df-299f-812e-2b7337673a8c  4..amazon         Xen - 0
 
 // 4. Battery ===========================================
 wmic.exe Path Win32_Battery Get BatteryStatus, DesignCapacity, EstimatedChargeRemaining, DesignVoltage, FullChargeCapacity /value
@@ -80,7 +80,7 @@ wmic nic get macaddress
 ipconfig /all => get macaddress of ethenet and wifi
 
 // 8. disk (file system)  ===========================================
-diskdrive get /value
+wmic diskdrive get /value
 
 BytesPerSector=512//
 Caption=AWS PVDISK SCSI Disk Device // name
@@ -103,3 +103,6 @@ SystemName=EC2AMAZ-9JRLFG5
 // 9. memory  ===========================================
 wmic memorychip get devicelocator, manufacturer, partnumber, serialnumber, capacity, speed, memorytype, formfactor
 // to get type from id => https://www.windowscentral.com/how-get-full-memory-specs-speed-size-type-part-number-form-factor-windows-10
+
+// 10. Display
+wmic desktopmonitor get Caption, MonitorType, MonitorManufacturer, Name, ScreenHeight, ScreenWidth
