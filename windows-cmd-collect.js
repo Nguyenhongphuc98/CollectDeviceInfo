@@ -1,8 +1,8 @@
 
 //Get computer name
-console.log(process.env['COMPUTERNAME']);
+console.log(process.env['COMPUTERNAME']); // it's log host name??
 
-// 1. CPU ===========================================
+// 1. CPU =========================================== resolve
 wmic.exe cpu get /value
 // Caption=Intel64 Family 6 Model 63 Stepping 2 => count processer = num line start with Caption
 
@@ -35,22 +35,23 @@ UniqueId=
 // UpgradeMethod=1 => socket type base on id
 
 
-// 2.Bluetooth ===========================================
+// 2.Bluetooth =========================================== resolve
 wmic.exe path Win32_PNPEntity get /value // :((
+    WMIC PATH Win32_PNPEntity WHERE Service="BTHUSB" 
 
 // 3. BIOS ===========================================
 wmic.exe bios get Version, SerialNumber, SMBIOSBIOSVersion
 //SerialNumber                          SMBIOSBIOSVersion  Version
-//ec2eb73a-13df-299f-812e-2b7337673a8c  4..amazon         Xen - 0
+//ec2eb73a-13df-299f-812e-2b7337673a8c  4.amazon         Xen - 0
 
-// 4. Battery ===========================================
+// 4. Battery =========================================== resolve
 wmic.exe Path Win32_Battery Get BatteryStatus, DesignCapacity, EstimatedChargeRemaining, DesignVoltage, FullChargeCapacity /value
 no instance available
 
-// 5. Graphics ===========================================
+// 5. Graphics ===========================================??
 
 
-// 6. Device overview =====================================
+// 6. Device overview ===================================== resolve
 systeminfo
 
 Host Name:                 EC2AMAZ-9JRLFG5
@@ -74,12 +75,12 @@ Time Zone:                 (UTC) Coordinated Universal Time
 Total Physical Memory:     512 MB
 Available Physical Memory: 68 MB
 
-// 7. Net work  ===========================================
+// 7. Net work  =========================================== resolve
 wmic nicconfig list /format:htable >> c:\nicinfo.html
 wmic nic get macaddress
 ipconfig /all => get macaddress of ethenet and wifi
 
-// 8. disk (file system)  ===========================================
+// 8. disk (file system)  =========================================== resolve
 wmic diskdrive get /value
 
 BytesPerSector=512//
@@ -100,9 +101,9 @@ SystemName=EC2AMAZ-9JRLFG5
 
 // Get harddisk model: powershell -command "Get-PhysicalDisk | Format-List" / actualy got above
 
-// 9. memory  ===========================================
+// 9. memory  =========================================== resolve
 wmic memorychip get devicelocator, manufacturer, partnumber, serialnumber, capacity, speed, memorytype, formfactor
 // to get type from id => https://www.windowscentral.com/how-get-full-memory-specs-speed-size-type-part-number-form-factor-windows-10
 
-// 10. Display
+// 10. Display - resolve
 wmic desktopmonitor get Caption, MonitorType, MonitorManufacturer, Name, ScreenHeight, ScreenWidth
